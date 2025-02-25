@@ -1,14 +1,11 @@
-// Use Recharts components from the global Recharts object
-// Don't use import statements in browser environment
+// Get components from global objects instead of using imports
+const { useState, useEffect } = React;
 const {
   LineChart, BarChart, PieChart, ScatterChart, 
-  Line, Bar, Pie, Cell, Scatter, 
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
-  ResponsiveContainer, AreaChart, Area
+  Line, Bar, Pie, Cell, Scatter, XAxis, YAxis, 
+  CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  AreaChart, Area
 } = Recharts;
-
-// React hooks are available from the global React object
-const { useState, useEffect } = React;
 
 // Define the ChartGenerator component
 const ChartGenerator = () => {
@@ -25,33 +22,6 @@ const ChartGenerator = () => {
     fontSize: 12,
     is3D: false
   });
-  
-  const [generatedCode, setGeneratedCode] = useState('');
-  
-  // Chart type options grouped by category
-  const chartTypesByCategory = {
-    'Basic': [
-      { value: 'bar', label: 'Bar Chart' },
-      { value: 'barh', label: 'Horizontal Bar Chart' },
-      { value: 'line', label: 'Line Chart' },
-      { value: 'pie', label: 'Pie Chart' },
-      { value: 'scatter', label: 'Scatter Plot' },
-      { value: 'area', label: 'Area Chart' }
-    ],
-    'Statistical': [
-      { value: 'histogram', label: 'Histogram' },
-      { value: 'boxplot', label: 'Box Plot' },
-      { value: 'density', label: 'Density Plot (KDE)' }
-    ],
-    'Advanced': [
-      { value: '3dsurface', label: '3D Surface Plot' },
-      { value: 'heatmap', label: 'Heatmap' },
-      { value: 'polar', label: 'Polar Plot' },
-      { value: 'radar', label: 'Radar/Spider Chart' }
-    ]
-  };
-  
-  // Rest of your component code...
   
   const [generatedCode, setGeneratedCode] = useState('');
   
@@ -272,9 +242,9 @@ const ChartGenerator = () => {
     
     if (!data.length) {
       return (
-        <div className="bg-gray-100 p-4 rounded-md h-64 flex items-center justify-center">
-          <p className="text-gray-500">No data to display</p>
-        </div>
+        React.createElement("div", { className: "bg-gray-100 p-4 rounded-md h-64 flex items-center justify-center" },
+          React.createElement("p", { className: "text-gray-500" }, "No data to display")
+        )
       );
     }
     
@@ -283,337 +253,343 @@ const ChartGenerator = () => {
     
     if (specialCharts.includes(chartConfig.type)) {
       return (
-        <div className="bg-gray-100 p-4 rounded-md h-64 flex items-center justify-center flex-col">
-          <p className="text-gray-500 mb-2">Preview not available for {chartConfig.type}</p>
-          <p className="text-xs text-gray-400">Generate Python code to see the result</p>
-        </div>
+        React.createElement("div", { className: "bg-gray-100 p-4 rounded-md h-64 flex items-center justify-center flex-col" },
+          React.createElement("p", { className: "text-gray-500 mb-2" }, "Preview not available for ", chartConfig.type),
+          React.createElement("p", { className: "text-xs text-gray-400" }, "Generate Python code to see the result")
+        )
       );
     }
     
     switch (chartConfig.type) {
       case 'bar':
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
-              {chartConfig.showGrid && <CartesianGrid strokeDasharray="3 3" />}
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              {chartConfig.showLegend && <Legend />}
-              <Bar dataKey="value" fill={colors[0] || "#8884d8"}>
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)`} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(BarChart, { data: data },
+              chartConfig.showGrid && React.createElement(CartesianGrid, { strokeDasharray: "3 3" }),
+              React.createElement(XAxis, { dataKey: "name" }),
+              React.createElement(YAxis, null),
+              React.createElement(Tooltip, null),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Bar, { dataKey: "value", fill: colors[0] || "#8884d8" },
+                data.map((entry, index) => (
+                  React.createElement(Cell, { 
+                    key: `cell-${index}`, 
+                    fill: colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)` 
+                  })
+                ))
+              )
+            )
+          )
         );
         
       case 'barh':
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data} layout="vertical">
-              {chartConfig.showGrid && <CartesianGrid strokeDasharray="3 3" />}
-              <XAxis type="number" />
-              <YAxis type="category" dataKey="name" />
-              <Tooltip />
-              {chartConfig.showLegend && <Legend />}
-              <Bar dataKey="value" fill={colors[0] || "#8884d8"}>
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)`} />
-                ))}
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(BarChart, { data: data, layout: "vertical" },
+              chartConfig.showGrid && React.createElement(CartesianGrid, { strokeDasharray: "3 3" }),
+              React.createElement(XAxis, { type: "number" }),
+              React.createElement(YAxis, { type: "category", dataKey: "name" }),
+              React.createElement(Tooltip, null),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Bar, { dataKey: "value", fill: colors[0] || "#8884d8" },
+                data.map((entry, index) => (
+                  React.createElement(Cell, { 
+                    key: `cell-${index}`, 
+                    fill: colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)` 
+                  })
+                ))
+              )
+            )
+          )
         );
         
       case 'line':
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={data}>
-              {chartConfig.showGrid && <CartesianGrid strokeDasharray="3 3" />}
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              {chartConfig.showLegend && <Legend />}
-              <Line type="monotone" dataKey="value" stroke={colors[0] || "#8884d8"} dot={{ stroke: colors[0] || "#8884d8", strokeWidth: 2, r: 4 }} />
-            </LineChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(LineChart, { data: data },
+              chartConfig.showGrid && React.createElement(CartesianGrid, { strokeDasharray: "3 3" }),
+              React.createElement(XAxis, { dataKey: "name" }),
+              React.createElement(YAxis, null),
+              React.createElement(Tooltip, null),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Line, { 
+                type: "monotone", 
+                dataKey: "value", 
+                stroke: colors[0] || "#8884d8",
+                dot: { stroke: colors[0] || "#8884d8", strokeWidth: 2, r: 4 }
+              })
+            )
+          )
         );
         
       case 'pie':
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Pie
-                data={data}
-                cx="50%"
-                cy="50%"
-                labelLine={true}
-                label={({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)`} />
-                ))}
-              </Pie>
-              {chartConfig.showLegend && <Legend />}
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(PieChart, null,
+              React.createElement(Pie, {
+                data: data,
+                cx: "50%",
+                cy: "50%",
+                labelLine: true,
+                label: ({name, percent}) => `${name}: ${(percent * 100).toFixed(0)}%`,
+                outerRadius: 80,
+                fill: "#8884d8",
+                dataKey: "value"
+              },
+                data.map((entry, index) => (
+                  React.createElement(Cell, { 
+                    key: `cell-${index}`, 
+                    fill: colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)` 
+                  })
+                ))
+              ),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Tooltip, null)
+            )
+          )
         );
         
       case 'scatter':
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <ScatterChart>
-              {chartConfig.showGrid && <CartesianGrid strokeDasharray="3 3" />}
-              <XAxis dataKey="name" type="category" />
-              <YAxis dataKey="value" />
-              <Tooltip cursor={{strokeDasharray: '3 3'}} />
-              {chartConfig.showLegend && <Legend />}
-              <Scatter name={chartConfig.yLabel} data={data} fill={colors[0] || "#8884d8"} />
-            </ScatterChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(ScatterChart, null,
+              chartConfig.showGrid && React.createElement(CartesianGrid, { strokeDasharray: "3 3" }),
+              React.createElement(XAxis, { dataKey: "name", type: "category" }),
+              React.createElement(YAxis, { dataKey: "value" }),
+              React.createElement(Tooltip, { cursor: {strokeDasharray: '3 3'} }),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Scatter, { 
+                name: chartConfig.yLabel, 
+                data: data, 
+                fill: colors[0] || "#8884d8" 
+              })
+            )
+          )
         );
         
       case 'area':
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={data}>
-              {chartConfig.showGrid && <CartesianGrid strokeDasharray="3 3" />}
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              {chartConfig.showLegend && <Legend />}
-              <Area type="monotone" dataKey="value" stroke={colors[0] || "#8884d8"} fill={colors[0] || "#8884d8"} fillOpacity={0.3} />
-            </AreaChart>
-          </ResponsiveContainer>
-        );
-        
-      case 'radar':
-        // Simple approximation of a radar chart using a line chart
-        return (
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-              <Tooltip />
-              {chartConfig.showLegend && <Legend />}
-              <Pie
-                data={data}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                innerRadius={30}
-                outerRadius={80}
-                fill="#8884d8"
-              >
-                {data.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={colors[index % colors.length] || `hsl(${index * 45}, 70%, 60%)`} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(AreaChart, { data: data },
+              chartConfig.showGrid && React.createElement(CartesianGrid, { strokeDasharray: "3 3" }),
+              React.createElement(XAxis, { dataKey: "name" }),
+              React.createElement(YAxis, null),
+              React.createElement(Tooltip, null),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Area, { 
+                type: "monotone", 
+                dataKey: "value", 
+                stroke: colors[0] || "#8884d8", 
+                fill: colors[0] || "#8884d8", 
+                fillOpacity: 0.3 
+              })
+            )
+          )
         );
         
       default:
         return (
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={data}>
-              {chartConfig.showGrid && <CartesianGrid strokeDasharray="3 3" />}
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              {chartConfig.showLegend && <Legend />}
-              <Bar dataKey="value" fill={colors[0] || "#8884d8"} />
-            </BarChart>
-          </ResponsiveContainer>
+          React.createElement(ResponsiveContainer, { width: "100%", height: 300 },
+            React.createElement(BarChart, { data: data },
+              chartConfig.showGrid && React.createElement(CartesianGrid, { strokeDasharray: "3 3" }),
+              React.createElement(XAxis, { dataKey: "name" }),
+              React.createElement(YAxis, null),
+              React.createElement(Tooltip, null),
+              chartConfig.showLegend && React.createElement(Legend, null),
+              React.createElement(Bar, { dataKey: "value", fill: colors[0] || "#8884d8" })
+            )
+          )
         );
     }
   };
   
-  return (
-    <div className="max-w-6xl mx-auto p-4 bg-gray-50" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-      <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">Chart Generator Preview</h1>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Left side: Configuration Panel */}
-        <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-          <h2 className="text-lg font-medium mb-4 text-gray-800">Chart Configuration</h2>
-          
-          <div className="space-y-4">
-            {/* Chart Type */}
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Chart Type</label>
-              <select 
-                name="type" 
-                value={chartConfig.type} 
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md bg-white"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              >
-                {Object.keys(chartTypesByCategory).map(category => (
-                  <optgroup key={category} label={category}>
-                    {chartTypesByCategory[category].map(type => (
-                      <option key={type.value} value={type.value}>{type.label}</option>
-                    ))}
-                  </optgroup>
-                ))}
-              </select>
-            </div>
-            
-            {/* Title and Labels */}
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Chart Title</label>
-              <input 
-                type="text" 
-                name="title" 
-                value={chartConfig.title} 
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              />
-            </div>
-            
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">X-Axis Label</label>
-                <input 
-                  type="text" 
-                  name="xLabel" 
-                  value={chartConfig.xLabel} 
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium mb-1 text-gray-700">Y-Axis Label</label>
-                <input 
-                  type="text" 
-                  name="yLabel" 
-                  value={chartConfig.yLabel} 
-                  onChange={handleChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                />
-              </div>
-            </div>
-            
-            {/* Data Inputs */}
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">X-Axis Data (comma separated)</label>
-              <input 
-                type="text" 
-                name="xData" 
-                value={chartConfig.xData} 
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              />
-            </div>
-            
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Y-Axis Data (comma separated)</label>
-              <input 
-                type="text" 
-                name="yData" 
-                value={chartConfig.yData} 
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              />
-            </div>
-            
-            {/* Colors */}
-            <div>
-              <label className="block text-sm font-medium mb-1 text-gray-700">Colors (comma separated)</label>
-              <input 
-                type="text" 
-                name="colors" 
-                value={chartConfig.colors} 
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded-md"
-                style={{ fontFamily: "'JetBrains Mono', monospace" }}
-              />
-            </div>
-            
-            {/* Additional Options */}
-            <div className="flex flex-wrap gap-4 pt-2 border-t border-gray-200">
-              <div className="flex items-center">
-                <input 
-                  type="checkbox" 
-                  id="showGrid" 
-                  name="showGrid" 
-                  checked={chartConfig.showGrid} 
-                  onChange={handleChange}
-                  className="mr-2"
-                />
-                <label htmlFor="showGrid" className="text-sm text-gray-700">Show Grid</label>
-              </div>
-              
-              <div className="flex items-center">
-                <input 
-                  type="checkbox" 
-                  id="showLegend" 
-                  name="showLegend" 
-                  checked={chartConfig.showLegend} 
-                  onChange={handleChange}
-                  className="mr-2"
-                />
-                <label htmlFor="showLegend" className="text-sm text-gray-700">Show Legend</label>
-              </div>
-              
-              <div className="flex items-center">
-                <label htmlFor="fontSize" className="mr-2 text-sm text-gray-700">Font Size:</label>
-                <input 
-                  type="number" 
-                  id="fontSize" 
-                  name="fontSize" 
-                  value={chartConfig.fontSize} 
-                  onChange={handleChange}
-                  min="8"
-                  max="24"
-                  className="w-16 p-1 border border-gray-300 rounded-md"
-                  style={{ fontFamily: "'JetBrains Mono', monospace" }}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+  // Render the component using React.createElement instead of JSX
+  return React.createElement(
+    "div", 
+    { 
+      className: "max-w-6xl mx-auto p-4 bg-gray-50", 
+      style: { fontFamily: "'JetBrains Mono', monospace" }
+    },
+    React.createElement("h1", { className: "text-2xl font-bold mb-6 text-center text-gray-800" }, "Chart Generator"),
+    
+    React.createElement("div", { className: "grid grid-cols-1 lg:grid-cols-2 gap-6" },
+      // Left side: Configuration Panel
+      React.createElement("div", { className: "bg-white p-4 rounded-lg shadow-sm border border-gray-200" },
+        React.createElement("h2", { className: "text-lg font-medium mb-4 text-gray-800" }, "Chart Configuration"),
         
-        {/* Right side: Preview and Code */}
-        <div className="space-y-6">
-          {/* Chart Preview */}
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <h2 className="text-lg font-medium mb-3 text-gray-800">Preview</h2>
-            <div className="border border-gray-200 rounded-md overflow-hidden bg-gray-50 p-2">
-              {renderChartPreview()}
-            </div>
-          </div>
+        React.createElement("div", { className: "space-y-4" },
+          // Chart Type
+          React.createElement("div", null,
+            React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "Chart Type"),
+            React.createElement("select", { 
+              name: "type", 
+              value: chartConfig.type, 
+              onChange: handleChange,
+              className: "w-full p-2 border border-gray-300 rounded-md bg-white",
+              style: { fontFamily: "'JetBrains Mono', monospace" }
+            },
+              Object.keys(chartTypesByCategory).map(category => 
+                React.createElement("optgroup", { key: category, label: category },
+                  chartTypesByCategory[category].map(type => 
+                    React.createElement("option", { key: type.value, value: type.value }, type.label)
+                  )
+                )
+              )
+            )
+          ),
           
-          {/* Generated Code */}
-          <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-            <div className="flex justify-between items-center mb-3">
-              <h2 className="text-lg font-medium text-gray-800">Python Code</h2>
-              <button 
-                className="bg-gray-100 text-gray-800 px-3 py-1 rounded-md hover:bg-gray-200 border border-gray-300 text-sm"
-              >
-                Copy
-              </button>
-            </div>
-            <div className="bg-gray-900 p-3 rounded-md overflow-x-auto border border-gray-700 h-64">
-              <pre className="text-green-400 text-sm overflow-auto h-full" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-                {generatedCode}
-              </pre>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+          // Title
+          React.createElement("div", null,
+            React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "Chart Title"),
+            React.createElement("input", { 
+              type: "text", 
+              name: "title", 
+              value: chartConfig.title, 
+              onChange: handleChange,
+              className: "w-full p-2 border border-gray-300 rounded-md",
+              style: { fontFamily: "'JetBrains Mono', monospace" }
+            })
+          ),
+          
+          // Labels
+          React.createElement("div", { className: "grid grid-cols-2 gap-4" },
+            React.createElement("div", null,
+              React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "X-Axis Label"),
+              React.createElement("input", { 
+                type: "text", 
+                name: "xLabel", 
+                value: chartConfig.xLabel, 
+                onChange: handleChange,
+                className: "w-full p-2 border border-gray-300 rounded-md",
+                style: { fontFamily: "'JetBrains Mono', monospace" }
+              })
+            ),
+            React.createElement("div", null,
+              React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "Y-Axis Label"),
+              React.createElement("input", { 
+                type: "text", 
+                name: "yLabel", 
+                value: chartConfig.yLabel, 
+                onChange: handleChange,
+                className: "w-full p-2 border border-gray-300 rounded-md",
+                style: { fontFamily: "'JetBrains Mono', monospace" }
+              })
+            )
+          ),
+          
+          // X-Axis Data
+          React.createElement("div", null,
+            React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "X-Axis Data (comma separated)"),
+            React.createElement("input", { 
+              type: "text", 
+              name: "xData", 
+              value: chartConfig.xData, 
+              onChange: handleChange,
+              className: "w-full p-2 border border-gray-300 rounded-md",
+              style: { fontFamily: "'JetBrains Mono', monospace" }
+            })
+          ),
+          
+          // Y-Axis Data
+          React.createElement("div", null,
+            React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "Y-Axis Data (comma separated)"),
+            React.createElement("input", { 
+              type: "text", 
+              name: "yData", 
+              value: chartConfig.yData, 
+              onChange: handleChange,
+              className: "w-full p-2 border border-gray-300 rounded-md",
+              style: { fontFamily: "'JetBrains Mono', monospace" }
+            })
+          ),
+          
+          // Colors
+          React.createElement("div", null,
+            React.createElement("label", { className: "block text-sm font-medium mb-1 text-gray-700" }, "Colors (comma separated)"),
+            React.createElement("input", { 
+              type: "text", 
+              name: "colors", 
+              value: chartConfig.colors, 
+              onChange: handleChange,
+              className: "w-full p-2 border border-gray-300 rounded-md",
+              style: { fontFamily: "'JetBrains Mono', monospace" }
+            })
+          ),
+          
+          // Additional Options
+          React.createElement("div", { className: "flex flex-wrap gap-4 pt-2 border-t border-gray-200" },
+            React.createElement("div", { className: "flex items-center" },
+              React.createElement("input", { 
+                type: "checkbox", 
+                id: "showGrid", 
+                name: "showGrid", 
+                checked: chartConfig.showGrid, 
+                onChange: handleChange,
+                className: "mr-2"
+              }),
+              React.createElement("label", { htmlFor: "showGrid", className: "text-sm text-gray-700" }, "Show Grid")
+            ),
+            
+            React.createElement("div", { className: "flex items-center" },
+              React.createElement("input", { 
+                type: "checkbox", 
+                id: "showLegend", 
+                name: "showLegend", 
+                checked: chartConfig.showLegend, 
+                onChange: handleChange,
+                className: "mr-2"
+              }),
+              React.createElement("label", { htmlFor: "showLegend", className: "text-sm text-gray-700" }, "Show Legend")
+            ),
+            
+            React.createElement("div", { className: "flex items-center" },
+              React.createElement("label", { htmlFor: "fontSize", className: "mr-2 text-sm text-gray-700" }, "Font Size:"),
+              React.createElement("input", { 
+                type: "number", 
+                id: "fontSize", 
+                name: "fontSize", 
+                value: chartConfig.fontSize, 
+                onChange: handleChange,
+                min: "8",
+                max: "24",
+                className: "w-16 p-1 border border-gray-300 rounded-md",
+                style: { fontFamily: "'JetBrains Mono', monospace" }
+              })
+            )
+          )
+        )
+      ),
+      
+      // Right side: Preview and Code
+      React.createElement("div", { className: "space-y-6" },
+        // Chart Preview
+        React.createElement("div", { className: "bg-white p-4 rounded-lg shadow-sm border border-gray-200" },
+          React.createElement("h2", { className: "text-lg font-medium mb-3 text-gray-800" }, "Preview"),
+          React.createElement("div", { className: "border border-gray-200 rounded-md overflow-hidden bg-gray-50 p-2" },
+            renderChartPreview()
+          )
+        ),
+        
+        // Generated Code
+        React.createElement("div", { className: "bg-white p-4 rounded-lg shadow-sm border border-gray-200" },
+          React.createElement("div", { className: "flex justify-between items-center mb-3" },
+            React.createElement("h2", { className: "text-lg font-medium text-gray-800" }, "Python Code"),
+            React.createElement("button", { 
+              className: "bg-gray-100 text-gray-800 px-3 py-1 rounded-md hover:bg-gray-200 border border-gray-300 text-sm",
+              onClick: () => {
+                navigator.clipboard.writeText(generatedCode);
+                alert('Code copied to clipboard!');
+              }
+            }, "Copy")
+          ),
+          React.createElement("div", { className: "bg-gray-900 p-3 rounded-md overflow-x-auto border border-gray-700 h-64" },
+            React.createElement("pre", { 
+              className: "text-green-400 text-sm overflow-auto h-full", 
+              style: { fontFamily: "'JetBrains Mono', monospace" }
+            }, generatedCode)
+          )
+        )
+      )
+    )
   );
 };
-
-export default ChartGenerator;
