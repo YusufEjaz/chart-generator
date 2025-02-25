@@ -1,16 +1,16 @@
-// Destructure needed components from Recharts
+// Use Recharts components from the global Recharts object
+// Don't use import statements in browser environment
 const {
-  LineChart, BarChart, PieChart, ScatterChart, AreaChart,
-  Line, Bar, Pie, Cell, Scatter, Area,
-  XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  LineChart, BarChart, PieChart, ScatterChart, 
+  Line, Bar, Pie, Cell, Scatter, 
+  XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
+  ResponsiveContainer, AreaChart, Area
 } = Recharts;
 
-// Define the ChartGenerator component
-const ChartGenerator = () => {
-  // Rest of your component code remains the same...
-import React, { useState, useEffect } from 'react';
-import { LineChart, BarChart, PieChart, ScatterChart, Line, Bar, Pie, Cell, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, AreaChart, Area } from 'recharts';
+// React hooks are available from the global React object
+const { useState, useEffect } = React;
 
+// Define the ChartGenerator component
 const ChartGenerator = () => {
   const [chartConfig, setChartConfig] = useState({
     type: 'bar',
@@ -25,6 +25,33 @@ const ChartGenerator = () => {
     fontSize: 12,
     is3D: false
   });
+  
+  const [generatedCode, setGeneratedCode] = useState('');
+  
+  // Chart type options grouped by category
+  const chartTypesByCategory = {
+    'Basic': [
+      { value: 'bar', label: 'Bar Chart' },
+      { value: 'barh', label: 'Horizontal Bar Chart' },
+      { value: 'line', label: 'Line Chart' },
+      { value: 'pie', label: 'Pie Chart' },
+      { value: 'scatter', label: 'Scatter Plot' },
+      { value: 'area', label: 'Area Chart' }
+    ],
+    'Statistical': [
+      { value: 'histogram', label: 'Histogram' },
+      { value: 'boxplot', label: 'Box Plot' },
+      { value: 'density', label: 'Density Plot (KDE)' }
+    ],
+    'Advanced': [
+      { value: '3dsurface', label: '3D Surface Plot' },
+      { value: 'heatmap', label: 'Heatmap' },
+      { value: 'polar', label: 'Polar Plot' },
+      { value: 'radar', label: 'Radar/Spider Chart' }
+    ]
+  };
+  
+  // Rest of your component code...
   
   const [generatedCode, setGeneratedCode] = useState('');
   
