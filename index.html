@@ -5,28 +5,31 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chart Generator</title>
   <!-- Load React -->
-  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
   <!-- Load Recharts -->
-  <script src="https://unpkg.com/recharts/umd/Recharts.min.js"></script>
+  <script src="https://unpkg.com/recharts@2.5.0/umd/Recharts.js" crossorigin></script>
   <!-- Load Babel for JSX -->
-  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
   <!-- Load JetBrains Mono font -->
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <!-- Load our CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="root"></div>
+  <div id="root">Loading Chart Generator...</div>
   
   <!-- Load our component script -->
   <script type="text/babel" src="chart-generator.js"></script>
   
   <!-- Initialize the app -->
   <script type="text/babel">
-    const container = document.getElementById('root');
-    const root = ReactDOM.createRoot(container);
-    root.render(<ChartGenerator />);
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log("DOM loaded, initializing app");
+      const container = document.getElementById('root');
+      const root = ReactDOM.createRoot(container);
+      root.render(React.createElement(ChartGenerator));
+    });
   </script>
 </body>
 </html>
