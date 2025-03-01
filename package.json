@@ -2,7 +2,7 @@
     "name": "chart-generator",
     "version": "1.0.0",
     "private": true,
-    "homepage": "https://<yusufejaz>.github.io/chart-generator",
+    "homepage": "https://yusufejaz.github.io/chart-generator",
     "dependencies": {
       "react": "^18.2.0",
       "react-dom": "^18.2.0",
