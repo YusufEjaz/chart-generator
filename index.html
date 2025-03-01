@@ -4,31 +4,86 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chart Generator</title>
+  
   <!-- Load React -->
   <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <!-- Load Recharts -->
-  <script src="https://unpkg.com/recharts@2.5.0/umd/Recharts.js" crossorigin></script>
+  
+  <!-- Load Recharts and dependencies -->
+  <script src="https://unpkg.com/prop-types@15.8.1/prop-types.min.js" crossorigin></script>
+  <script src="https://unpkg.com/d3-scale@4.0.2/dist/d3-scale.min.js" crossorigin></script>
+  <script src="https://unpkg.com/d3-shape@3.2.0/dist/d3-shape.min.js" crossorigin></script>
+  <script src="https://unpkg.com/d3-array@3.2.3/dist/d3-array.min.js" crossorigin></script>
+  <script src="https://unpkg.com/recharts@2.7.2/umd/Recharts.min.js" crossorigin></script>
+  
   <!-- Load Babel for JSX -->
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js" crossorigin></script>
+  
   <!-- Load JetBrains Mono font -->
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  
   <!-- Load our CSS -->
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div id="root">Loading Chart Generator...</div>
   
-  <!-- Load our component script -->
-  <script type="text/babel" src="chart-generator.js"></script>
+  <!-- Add a checking script before loading the component -->
+  <script>
+    // Check if Recharts is available
+    window.addEventListener('DOMContentLoaded', function() {
+      if (typeof Recharts === 'undefined') {
+        document.getElementById('root').innerHTML = 
+          '<div style="color:red;padding:20px;">Error: Recharts library not loaded. Please check your internet connection and reload the page.</div>';
+        console.error('Recharts is not defined. Check script loading order or network issues.');
+      } else {
+        console.log('Recharts loaded successfully:', Object.keys(Recharts));
+      }
+    });
+  </script>
   
-  <!-- Initialize the app -->
+  <!-- Load our component script -->
   <script type="text/babel">
+    // Get components from global Recharts object
+    const {
+      LineChart, BarChart, PieChart, ScatterChart, 
+      Line, Bar, Pie, Cell, Scatter, XAxis, YAxis, 
+      CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+      AreaChart, Area
+    } = Recharts;
+
+    // Define the ChartGenerator component
+    const ChartGenerator = () => {
+      const [chartConfig, React.useState({
+        type: 'bar',
+        title: 'Sales Data',
+        xLabel: 'Months',
+        yLabel: 'Revenue',
+        xData: 'January, February, March, April',
+        yData: '100, 150, 200, 120',
+        colors: 'red, blue, green, orange',
+        showGrid: true,
+        showLegend: true,
+        fontSize: 12,
+        is3D: false
+      });
+      
+      // Rest of your component code...
+      // (Include the full component code here)
+    };
+
+    // Initialize the app
     document.addEventListener('DOMContentLoaded', function() {
-      console.log("DOM loaded, initializing app");
-      const container = document.getElementById('root');
-      const root = ReactDOM.createRoot(container);
-      root.render(React.createElement(ChartGenerator));
+      try {
+        const container = document.getElementById('root');
+        const root = ReactDOM.createRoot(container);
+        root.render(React.createElement(ChartGenerator));
+        console.log("App initialized");
+      } catch (error) {
+        console.error("Error initializing app:", error);
+        document.getElementById('root').innerHTML = 
+          `<div style="color:red;padding:20px;">Error initializing app: ${error.message}</div>`;
+      }
     });
   </script>
 </body>
