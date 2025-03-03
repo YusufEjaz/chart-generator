@@ -20,7 +20,7 @@ A web application for generating data visualizations with Python code generation
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/chart-generator.git
+   git clone https://github.com/yusufejaz/chart-generator.git
    cd chart-generator
    ```
 
