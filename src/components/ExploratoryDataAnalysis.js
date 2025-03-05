@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { /api/generate-eda } from 'react-router-dom';
 
 const ExploratoryDataAnalysis = () => {
   const [csvFile, setCsvFile] = useState(null);
