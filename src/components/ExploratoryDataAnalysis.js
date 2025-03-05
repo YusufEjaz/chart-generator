@@ -48,7 +48,7 @@ const ExploratoryDataAnalysis = () => {
       formData.append('analysis_type', analysisType);
       
       // Call your Python backend API
-      const response = await fetch('https://your-python-api.com/generate-eda', {
+      const response = await fetch('/api/generate-eda', {
         method: 'POST',
         body: formData,
       });
