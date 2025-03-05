@@ -263,23 +263,6 @@ label {
   color: #f43f5e;
 }
 
-.app-nav {
-  margin-top: 10px;
-}
-
-.nav-link {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #f8fafc;
-  color: #2563eb;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-}
-
-.nav-link:hover {
-  background-color: #f0f9ff;
-}
 .csv-columns {
   display: flex;
   gap: 1rem;
