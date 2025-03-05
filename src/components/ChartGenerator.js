@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom'; 
 import { 
   BarChart, Bar, LineChart, Line, PieChart, Pie, ScatterChart, Scatter, 
   AreaChart, Area, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
@@ -464,12 +463,9 @@ ax.fill(angles, y_closed, color="${colors[0]}", alpha=0.25)\n\n`;
   return (
     <div className="chart-generator">
       <header className="app-header">
-      <h1>Chart Generator App</h1>
-      <p>Create custom charts and get Python code</p>
-      <nav className="app-nav">
-        <Link to="/eda" className="nav-link">Exploratory Data Analysis →</Link>
-      </nav>
-    </header>
+        <h1>Chart Generator App</h1>
+        <p>Create custom charts and get Python code</p>
+      </header>
       
       <main className="app-content">
         <div className="config-panel">
